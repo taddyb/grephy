@@ -1,12 +1,30 @@
-dfa = {0:{'0':0, '1':1},
-       1:{'0':2, '1':0},
-       2:{'0':1, '1':2}}
+import sys
 
-def accepts(transitions, initial, accepting, s):
-    state = initial
-    for c in s:
-        state = transitions[state][c]
-    return state in accepting
+
+nfaFile = open(sys.argv[2],"w")
+# dfaFile = open(sys.argv[2],"w")
+inputFile = open(sys.argv[1],"r")
+
+inputContents = inputFile.read()
+inputFile.close()
+
+nfaList = []
+alphabetList = []
+stateCount = 0
+for character in inputContents:
+    if (ord(character) > 47) and (ord(character) < 123):
+        alphabetList.append(character)
+        nfaList.append([stateCount])
+        stateCount = stateCount + 1
+
+alphabetSet = set(alphabetList)
+
+print nfaList
+
+
+
+
+
 
 
 # class RegularLanguage:
