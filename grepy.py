@@ -34,9 +34,6 @@ print nfaList
 
 print "Alphabet:"
 print alphabetSet
-'
-'
-;'
 
 
 # Next Steps
