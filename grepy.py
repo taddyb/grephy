@@ -11,6 +11,9 @@ inputFile.close()
 nfaList = []
 alphabetList = []
 stateCount = 0
+nfaList.append([stateCount])
+stateCount = stateCount + 1
+
 for character in inputContents:
     if (ord(character) > 47) and (ord(character) < 123):
         alphabetList.append(character)
@@ -19,19 +22,17 @@ for character in inputContents:
 
 alphabetSet = set(alphabetList)
 
+for position in nfaList:
+    if(position == nfaList[0]):
+        print position
+    else:
+        print "--"
+        print position
+
 print nfaList
 
-
-
-
-
-
-
-# class RegularLanguage:
-#     """Takes in a regular language and turns it into another object which describes what it is"""
-#     def __init__(self, arg):
-#         if isintance
-#         self.arg = arg
-#
-#     def accepts(input):
-#         return accepts()
+# Next Steps
+# 1) write NFA to file.
+# 2) use alphabet to make a dfa
+# 3) minimize the dfaFile
+# 4) make an accepting function
