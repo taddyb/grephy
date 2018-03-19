@@ -22,6 +22,7 @@ for character in inputContents:
 
 alphabetSet = set(alphabetList)
 
+print "Basic NFA"
 for position in nfaList:
     if(position == nfaList[0]):
         print position
@@ -30,6 +31,13 @@ for position in nfaList:
         print position
 
 print nfaList
+
+print "Alphabet:"
+print alphabetSet
+'
+'
+;'
+
 
 # Next Steps
 # 1) write NFA to file.
