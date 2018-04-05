@@ -16,6 +16,12 @@ def parseArguments():
 
 if __name__ == "__main__":
     main()
+
+#Old code
+#
+# import sys
+#
+#
 # nfaFile = open(sys.argv[2],"w")
 # # dfaFile = open(sys.argv[2],"w")
 # inputFile = open(sys.argv[1],"r")
@@ -37,6 +43,7 @@ if __name__ == "__main__":
 #
 # alphabetSet = set(alphabetList)
 #
+# print "Basic NFA"
 # for position in nfaList:
 #     if(position == nfaList[0]):
 #         print position
@@ -45,6 +52,10 @@ if __name__ == "__main__":
 #         print position
 #
 # print nfaList
+#
+# print "Alphabet:"
+# print alphabetSet
+
 
 # Next Steps
 # 1) write NFA to file.
