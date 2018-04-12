@@ -6,55 +6,73 @@ import io
 
 #A class of an NFA
 class NFA(object):
-    # digraph of epsilon transitions
-    graph = ""
-    # regular expression
-    regexp = ""
-    #number of characters in regular expression
-    m = 0
-    def __init__(regexp):
+    def __init__(self, regexp):
         self.regexp = regexp
-        self.m = rexexp.len()
-        self.graph = nx.Digraph()
-        ops = Stack()
-        for i in range(0,m):
+        self.m = len(regexp)
+        self.graph = nx.DiGraph()
+        ops = []
+        for i in range(0,self.m):
             lp = i
-            if(rexexp[i] == '(' or rexexp[i] == '|'):
-                ops.push(i)
-            elif(regex[i] == ')'):
+            if(self.regexp[i] == '(' or self.regexp[i] == '|'):
+                ops.append(i)
+            elif(self.regexp[i] == ')'):
                 ore = ops.pop()
-                if(regexp[ore] == '|'):
+                if(self.regexp[ore] == '|'):
                     lp = ops.pop()
                     self.graph.add_edge(lp, ore + 1)
                     self.graph.add_edge(ore, i)
 
-                elif(regexp[ore] == '('):
+                elif(self.regexp[ore] == '('):
                     lp = ore
                 else:
                     assert False
 
             # If there is a kleene star, the code maps back to itself
-            if(i < m-1 and regexp[i+1] == '*'):
+            if(i < (self.m-1) and self.regexp[i+1] == '*'):
                 self.graph.add_edge(lp, i+1)
                 self.graph.add_edge(i+1, lp)
 
-            if(regexp[i] == '(' or regexp[i] == '|' or regexp[i] == '*'):
+            if(self.regexp[i] == '(' or self.regexp[i] == '|' or self.regexp[i] == '*'):
                 self.graph.add_edge(i, i+1)
 
 
+#DFA class
+#DFA class
+class DFA(object):
+    # regular expression
+    regexp = ""
+    # the dfa
+    dfa = ""
+    # The length of the dfa
+    m = 0
+    def __init__(self, nfa):
+        self.regexp = nfa.regexp
+        self.m = len(regexp)
+        self.dfa = nx.DiGraph()
+        ops = []
+        for i in range(0, (m+1)):
+            lp = i
+            if(self.regexp[i] == '(' or self.regexp[i] == '|'):
+                ops.append(i)
+            elif(self.regexp[i] == ')'):
+                ore = ops.pop()
+                if(self.regexp[ore] == '|'):
+                    lp = ops.pop()
+                    self.graph.add_edge(lp, ore + 1)
+                    self.graph.add_edge(ore, i)
 
-#A main function
-def main():
-    config = readConfig("config/config.ini")
-    args = parseArguments()
-    if(checkRegex(args.regex)):
-        alphabet = learnAlphabet(args.inputFile)
-        if(config.get('DEBUG', 'printAlpha')):
-            print(alphabet)
-        # nfa = NFA(args.regex)
-        # print(nfa.graph.edges())
-    else:
-        error(100)
+                elif(self.regexp[ore] == '('):
+                    lp = ore
+                else:
+                    assert False
+
+            # If there is a kleene star, the code maps back to itself
+            if(i < (self.m-1) and self.regexp[i+1] == '*'):
+                self.graph.add_edge(lp, i+1)
+                self.graph.add_edge(i+1, lp)
+
+            if(self.regexp[i] == '(' or self.regexp[i] == '|' or self.regexp[i] == '*'):
+                self.graph.add_edge(i, i+1)
 
 # A function to read the ini config FILE
 def readConfig(configPath):
@@ -94,15 +112,45 @@ def learnAlphabet(inputFile):
             alphabet.add(character)
     return alphabet;
 
-#A function which converts a regex expression to an NFA
-def regexToNFA(regex):
-    return;
+# A function to learn the alphabet of the regex
+def learnRegex(regexp):
+    alphabet = set()
+    for character in regexp:
+        if (ord(character) > 47) and (ord(character) < 123):
+            alphabet.add(character)
 
 #A function which takes in error codes and prints out error messages based on what is inputted
 def error(code):
     if(code == 100):
         print("*************************\n ERROR: Regular Expression not valid\n*************************")
+    elif(code == 101):
+        print("No Matches")
 
+# ***********************************************************************************************************************
+# ***********************************************************************************************************************
+# ***********************************************************************************************************************
+
+#A main function
+def main():
+    config = readConfig("config/config.ini")
+    args = parseArguments()
+    if(checkRegex(args.regex)):
+        alphabet = learnAlphabet(args.inputFile)
+        regexAlpha = learnRegex(args.regex)
+        if(config.get('DEBUG', 'printAlpha') == "True"):
+             print(alphabet)
+        if(config.get('DEBUG', 'checkAlphabets') == 'True'):
+            isValid = False
+            for character in regexAlpha:
+                for letter in alphabet:
+                    if(character == letter):
+                        isValid == True
+            if(isValid == False):
+                error(101)
+        nfa = NFA(args.regex)
+        print(nfa.graph.edges())
+    else:
+        error(100)
 
 if __name__ == "__main__":
     main()
