@@ -1,10 +1,19 @@
+##################################################################################
+# Grephy v1.0
+# Author: Tadd Bindas
+# A project which emulates grep
+##################################################################################
+# Imports
+##################################################################################
 import argparse
 import re
 import networkx as nx
 import ConfigParser
 import io
 
-#A class of an NFA
+##################################################################################
+# NFA Class
+##################################################################################
 class NFA(object):
     def __init__(self, regexp):
         self.regexp = regexp
@@ -35,9 +44,9 @@ class NFA(object):
             if(self.regexp[i] == '(' or self.regexp[i] == '|' or self.regexp[i] == '*'):
                 self.graph.add_edge(i, i+1)
 
-
-#DFA class
-#DFA class
+##################################################################################
+# DFA class
+##################################################################################
 class DFA(object):
     # regular expression
     regexp = ""
@@ -47,10 +56,10 @@ class DFA(object):
     m = 0
     def __init__(self, nfa):
         self.regexp = nfa.regexp
-        self.m = len(regexp)
+        self.m = len(nfa.regexp)
         self.dfa = nx.DiGraph()
         ops = []
-        for i in range(0, (m+1)):
+        for i in range(0, (self.m)):
             lp = i
             if(self.regexp[i] == '(' or self.regexp[i] == '|'):
                 ops.append(i)
@@ -58,8 +67,8 @@ class DFA(object):
                 ore = ops.pop()
                 if(self.regexp[ore] == '|'):
                     lp = ops.pop()
-                    self.graph.add_edge(lp, ore + 1)
-                    self.graph.add_edge(ore, i)
+                    self.dfa.add_edge(lp, ore + 1)
+                    self.dfa.add_edge(ore, i)
 
                 elif(self.regexp[ore] == '('):
                     lp = ore
@@ -68,13 +77,17 @@ class DFA(object):
 
             # If there is a kleene star, the code maps back to itself
             if(i < (self.m-1) and self.regexp[i+1] == '*'):
-                self.graph.add_edge(lp, i+1)
-                self.graph.add_edge(i+1, lp)
+                self.dfa.add_edge(lp, i+1)
+                self.dfa.add_edge(i+1, lp)
+                self.dfa.add_edge(lp, self.m+1)
 
             if(self.regexp[i] == '(' or self.regexp[i] == '|' or self.regexp[i] == '*'):
-                self.graph.add_edge(i, i+1)
+                self.dfa.add_edge(i, i+1)
+        self.dfa.add_edge(self.m+1, self.m+1 )
 
-# A function to read the ini config FILE
+##################################################################################
+# readConfig(): read the ini config FILE
+##################################################################################
 def readConfig(configPath):
     with open(configPath) as f:
         sample_config = f.read()
@@ -82,7 +95,9 @@ def readConfig(configPath):
         config.readfp(io.BytesIO(sample_config))
     return config;
 
-#A function to parse the input and create a --help message
+##################################################################################
+# parseArguments(): parse the input and create a --help message
+##################################################################################
 def parseArguments():
     parser = argparse.ArgumentParser(description='A program which emulates grep')
     parser = argparse.ArgumentParser(prog='Grepy')
@@ -94,7 +109,9 @@ def parseArguments():
     args = parser.parse_args()
     return args;
 
-# A function which checks to make sure the regular expression is valid
+##################################################################################
+# checkRegex(): checks to make sure the regular expression is valid
+##################################################################################
 def checkRegex(regex):
     try:
         re.compile(regex)
@@ -102,7 +119,9 @@ def checkRegex(regex):
     except re.error:
         return False;
 
-#A function to learn the alphabet of the input file
+##################################################################################
+# learnAlphabet(): learn the alphabet of the input file
+##################################################################################
 def learnAlphabet(inputFile):
     alphabet = set()
     inputContents = inputFile.read()
@@ -112,25 +131,26 @@ def learnAlphabet(inputFile):
             alphabet.add(character)
     return alphabet;
 
-# A function to learn the alphabet of the regex
+##################################################################################
+# learnRegex(): learn the alphabet of the regex
+##################################################################################
 def learnRegex(regexp):
     alphabet = set()
     for character in regexp:
         if (ord(character) > 47) and (ord(character) < 123):
             alphabet.add(character)
-
-#A function which takes in error codes and prints out error messages based on what is inputted
+##################################################################################
+# error(): takes in error codes and prints out error messages based on what is inputted
+##################################################################################
 def error(code):
     if(code == 100):
         print("*************************\n ERROR: Regular Expression not valid\n*************************")
     elif(code == 101):
         print("No Matches")
 
-# ***********************************************************************************************************************
-# ***********************************************************************************************************************
-# ***********************************************************************************************************************
-
-#A main function
+##################################################################################
+# main(): A main function
+##################################################################################
 def main():
     config = readConfig("config/config.ini")
     args = parseArguments()
@@ -149,6 +169,8 @@ def main():
                 error(101)
         nfa = NFA(args.regex)
         print(nfa.graph.edges())
+        dfa = DFA(nfa)
+        print(dfa.dfa.edges())
     else:
         error(100)
 
