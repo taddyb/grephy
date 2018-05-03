@@ -15,6 +15,7 @@ import io
 #NFA Class
 #################################################################################
 class NFA(object):
+
     def __init__(self, regexp):
         self.regexp = regexp
         self.m = len(regexp)
@@ -27,23 +28,29 @@ class NFA(object):
         while(i < self.m):
             if(self.regexp[i] == '('):
                 ops.append(i)
-            if(self.regexp[i] == '|'):
+            elif(self.regexp[i] == '+'):
                 info.append(string)
                 string=""
-            if(self.regexp[i] == ')'):
+            elif(self.regexp[i] == ')'):
                 ore = ops.pop()
                 if (self.regexp[ore] == '('):
-                    print(len(ops))
                     info.append(string)
                     string = ""
                     if(len(ops) == 0):
-                        self.graph.add_edge(state, state, transition=info)
+                        if(i < (self.m-1) and self.regexp[i+1] == '*'):
+                            self.graph.add_edge(state, state, transition=info)
+                            i = i + 1
+                        else:
+                            self.graph.add_edge(state, state +1, transition=info)
 
 
-            if(i < (self.m-1) and self.regexp[i+1] == '*'):
-                self.graph.add_edge(state, state, transition=self.regexp[i])
 
-            if((self.regexp[i] == '(' or self.regexp[i] == '|' or self.regexp[i] == '*' or self.regexp[i] == ')') == False):
+
+
+            elif(i < (self.m-1) and self.regexp[i+1] == '*'):
+                self.graph.add_edge(state, state, transition=check(self.regexp[i], state, self.graph))
+
+            elif((self.regexp[i] == '(' or self.regexp[i] == '+' or self.regexp[i] == '*' or self.regexp[i] == ')') == False):
                 if(len(ops) > 0):
                     string = string + self.regexp[i]
                 else:
@@ -63,36 +70,84 @@ class NFA(object):
             for char in word:
                 if(state != -1):
                     listStates = self.graph[state].keys()
-                    if(len(listStates) > 1):
-                        for i in listStates:
-                            if(isinstance(i, list)):
-                                for j in i:
-                                    if(char == self.graph[state][i]['transition']):
-                                        print(i)
-                                        state = i
+                    for j in listStates:
+                        if(isinstance(j, list)):
+                            for k in j:
+                                if(isinstance(self.graph[state][k]['transition'], list)):
+                                    for l in self.graph[state][k]['transition']:
+                                        if(char == l):
+                                            state = k
+                                        if(state == (length -1)):
+                                            recog.append(word)
+                                            state= -1
+                                else:
+                                    if(char == self.graph[state][k]['transition']):
+                                        state = k
+                                    if(state == (length -1)):
+                                        recog.append(word)
+                                        state= -1
+                        else:
+                            if(isinstance(self.graph[state][j]['transition'], list)):
+                                for l in self.graph[state][j]['transition']:
+                                    if(char == l):
+                                        state = j
                                     if(state == (length -1)):
                                         recog.append(word)
                                         state= -1
                             else:
-                                if(char == self.graph[state][i]['transition']):
-                                    print(i)
-                                    state = i
+                                if(char == self.graph[state][j]['transition']):
+                                    state = j
                                 if(state == (length -1)):
                                     recog.append(word)
                                     state= -1
-                    elif(char == self.graph[state][state+1]['transition']):
-                        state = state +1
-                        if(state == (length -1)):
-                            recog.append(word)
-                            state = -1
             state = 0
         return recog;
 
-
+##################################################################################
+# Check function to see if a transition already exists in that direction
+##################################################################################
+def check(char, state, graph):
+    if(graph.has_edge(state, state)):
+        list = [graph[state][state]['transition']]
+        list.append(char)
+        return list
+    else:
+        return char
 
 ##################################################################################
 # DFA class
 ##################################################################################
+class DFA(object):
+    def __init__(self, nfa, alphabet):
+        nfaGraph = nfa.graph
+        self.dfaGraph = nx.DiGraph()
+        nfaNodes = nfaGraph.nodes()
+        state=0
+        alphabet = list(alphabet)
+        for node in nfaNodes:
+            tempStates = list(alphabet)
+            listStates = nfaGraph[node].keys()
+            for i in listStates:
+                if(isinstance(i, list)):
+                    for j in i:
+                        transition = nfaGraph[node][j]['transition']
+                        tempStates.remove(transition)
+                        if(node == j):
+                            self.dfaGraph.add_edge(state, state, transition=transition)
+                        else:
+                            self.dfaGraph.add_edge(state, state+ 2, transition=transition)
+                        self.dfaGraph.add_edge(state, state+1, transition=tempStates)
+                        self.dfaGraph.add_edge(state+1, state+1, transition=alphabet)
+                        state = state + 2
+
+                else:
+                    transition = nfaGraph[node][i]['transition']
+                    tempStates.remove(transition)
+                    self.dfaGraph.add_edge(state, state+1, transition=tempStates)
+                    self.dfaGraph.add_edge(state+1, state+1, transition=alphabet)
+                    self.dfaGraph.add_edge(state, state+2, transition=transition)
+                    state = state + 2
+
 
 ##################################################################################
 # readConfig(): read the ini config FILE
@@ -110,8 +165,8 @@ def readConfig(configPath):
 def parseArguments():
     parser = argparse.ArgumentParser(description='A program which emulates grep')
     parser = argparse.ArgumentParser(prog='Grepy')
-    parser.add_argument('-n', metavar='NFA_FILE', type=argparse.FileType('rw'), help="A file to output an NFA of the regular expression to. Optional")
-    parser.add_argument('-d', metavar='DFA_FILE', type=argparse.FileType('rw'), help="A file to output a DFA of the regular expression to. Optional")
+    parser.add_argument('-n', metavar='NFA_FILE', type=argparse.FileType('rw'), help="A file to output an NFA of the regular expression to")
+    parser.add_argument('-d', metavar='DFA_FILE', type=argparse.FileType('rw'), help="A file to output a DFA of the regular expression to")
     parser.add_argument('regex', metavar='Regex_Expression', type=str, help='A regular expression to search the input file')
     parser.add_argument('inputFile', metavar='Input_File', type=argparse.FileType('r'), help="A file which the Regex_Expression checks for matches")
 
@@ -181,19 +236,23 @@ def main():
                 error(101)
             else:
                 nfa = NFA(args.regex)
-                print(nfa.graph.edges(data = True))
+                if(args.n is not None):
+                    nfaGraph = nfa.graph.edges(data = True)
+                    print("nice")
+                if(args.d is not None):
+                    dfa = DFA(nfa, regexAlpha)
+                    dfaGraph = dfa.dfaGraph.edges(data = True)
+                    
                 recog = nfa.recognizes(inputContents)
                 if(recog == []):
                     print("No Matches")
                 else:
                     print(recog)
-                # dfa = DFA(nfa)
-                # print(dfa.dfa.edges())
         else:
             nfa = NFA(args.regex)
             print(nfa.graph.edges(data= True))
-            # dfa = DFA(nfa)
-            # print(dfa.dfa.edges())
+            dfa = DFA(nfa, regexAlpha)
+            print(dfa.dfaGraph.edges())
     else:
         error(100)
 
