@@ -165,8 +165,8 @@ def readConfig(configPath):
 def parseArguments():
     parser = argparse.ArgumentParser(description='A program which emulates grep')
     parser = argparse.ArgumentParser(prog='Grepy')
-    parser.add_argument('-n', metavar='NFA_FILE', type=argparse.FileType('rw'), help="A file to output an NFA of the regular expression to")
-    parser.add_argument('-d', metavar='DFA_FILE', type=argparse.FileType('rw'), help="A file to output a DFA of the regular expression to")
+    parser.add_argument('-n', metavar='NFA_FILE', type=argparse.FileType('w'), help="A file to output an NFA of the regular expression to")
+    parser.add_argument('-d', metavar='DFA_FILE', type=argparse.FileType('w'), help="A file to output a DFA of the regular expression to")
     parser.add_argument('regex', metavar='Regex_Expression', type=str, help='A regular expression to search the input file')
     parser.add_argument('inputFile', metavar='Input_File', type=argparse.FileType('r'), help="A file which the Regex_Expression checks for matches")
 
@@ -226,33 +226,30 @@ def main():
         if(config.get('DEBUG', 'printAlpha') == "True"):
              print(alphabet)
              print(regexAlpha)
-        if(config.get('DEBUG', 'checkAlphabets') == 'True'):
-            isValid = False
-            for character in regexAlpha:
-                for letter in alphabet:
-                    if(character == letter):
-                        isValid = True
-            if(isValid == False):
-                error(101)
-            else:
-                nfa = NFA(args.regex)
-                if(args.n is not None):
-                    nfaGraph = nfa.graph.edges(data = True)
-                    print("nice")
-                if(args.d is not None):
-                    dfa = DFA(nfa, regexAlpha)
-                    dfaGraph = dfa.dfaGraph.edges(data = True)
-                    
-                recog = nfa.recognizes(inputContents)
-                if(recog == []):
-                    print("No Matches")
-                else:
-                    print(recog)
+        isValid = False
+        for character in regexAlpha:
+            for letter in alphabet:
+                if(character == letter):
+                    isValid = True
+        if(isValid == False):
+            error(101)
         else:
             nfa = NFA(args.regex)
-            print(nfa.graph.edges(data= True))
-            dfa = DFA(nfa, regexAlpha)
-            print(dfa.dfaGraph.edges())
+            if(args.n is not None):
+                nfaGraph = nfa.graph.edges(data = True)
+                args.n.write('\n'.join('(%s, %s, %s)' % x for x in nfaGraph))
+                args.n.close()
+            if(args.d is not None):
+                dfa = DFA(nfa, regexAlpha)
+                dfaGraph = dfa.dfaGraph.edges(data = True)
+                args.d.write('\n'.join('(%s, %s, %s)' % x for x in dfaGraph))
+                args.d.close()
+
+            recog = nfa.recognizes(inputContents)
+            if(recog == []):
+                print("No Matches")
+            else:
+                print(recog)
     else:
         error(100)
 
