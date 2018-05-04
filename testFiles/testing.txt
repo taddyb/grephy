@@ -1,0 +1,16 @@
+1) Regex: (a+w)e
+   File: pride.txt
+   OUtput: ['followed', 'wealthy;', 'however,', 'shower', 'wealthy', 'wedding.', 'wedding.']
+
+2) Regex: F*re
+   File: fresh.txt
+   Output: ['there', 'where', "relaxin'", 'were', 'scared', '"You\'re', "they're", 'there', "they're", 'prepared', 'There', 'there', 'here', 'disappeared', '"Fresh"', 'rare', 'there'] 
+
+3) Regex: Tadd
+   File: roster.txt
+   Output: No Matches
+
+4) Regex: Williams
+   File: roster.txt
+   Output: ['Williams,']
+
