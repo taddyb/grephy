@@ -12,10 +12,13 @@ Please run  `pip install [PACKAGE]` to get these files to run my code.
 - To run the file, do `python grephy.py [-n NFA_FILE] [-d DFA_FILE] REGEX FILE`. ***Note: Please wrap your regex in "quotes".***
 
 `-n` and `-d` are optional parameters which respectively output the NFA or DFA to a txt file in the format of:
+
 ```{node, node transitioning to, {transition: transition character} }```
+
 All that you need to do is specify what file you want the NFA or DFA to output to.
 
-- Here is an example of an NFA that will be printed for the regex ```abc```
+- Here is an example of an NFA that will be printed for the regex `abc`
+
 ```(0, 1, {'transition': 'a'})
 (1, 2, {'transition': 'b'})
 (2, 3, {'transition': 'c'})```
