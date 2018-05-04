@@ -41,7 +41,10 @@ class NFA(object):
                             self.graph.add_edge(state, state, transition=info)
                             i = i + 1
                         else:
-                            self.graph.add_edge(state, state +1, transition=info)
+                            self.graph.add_edge(state, state+1, transition=info)
+                            state = state + 1
+                        info=[]
+
 
 
 
@@ -49,7 +52,7 @@ class NFA(object):
 
             elif(i < (self.m-1) and self.regexp[i+1] == '*'):
                 self.graph.add_edge(state, state, transition=check(self.regexp[i], state, self.graph))
-
+                i = i + 1
             elif((self.regexp[i] == '(' or self.regexp[i] == '+' or self.regexp[i] == '*' or self.regexp[i] == ')') == False):
                 if(len(ops) > 0):
                     string = string + self.regexp[i]
@@ -80,9 +83,12 @@ class NFA(object):
                                         if(state == (length -1)):
                                             recog.append(word)
                                             state= -1
+
                                 else:
                                     if(char == self.graph[state][k]['transition']):
                                         state = k
+                                    else:
+                                        state = 0
                                     if(state == (length -1)):
                                         recog.append(word)
                                         state= -1
@@ -97,6 +103,8 @@ class NFA(object):
                             else:
                                 if(char == self.graph[state][j]['transition']):
                                     state = j
+                                else:
+                                    state = 0
                                 if(state == (length -1)):
                                     recog.append(word)
                                     state= -1
@@ -131,7 +139,10 @@ class DFA(object):
                 if(isinstance(i, list)):
                     for j in i:
                         transition = nfaGraph[node][j]['transition']
-                        tempStates.remove(transition)
+                        if(isinstance(transition, list)):
+                            tempStates = [x for x in tempStates if x not in transition]
+                        else:
+                            tempStates.remove(transition)
                         if(node == j):
                             self.dfaGraph.add_edge(state, state, transition=transition)
                         else:
@@ -142,7 +153,10 @@ class DFA(object):
 
                 else:
                     transition = nfaGraph[node][i]['transition']
-                    tempStates.remove(transition)
+                    if(isinstance(transition, list)):
+                        tempStates = [x for x in tempStates if x not in transition]
+                    else:
+                        tempStates.remove(transition)
                     self.dfaGraph.add_edge(state, state+1, transition=tempStates)
                     self.dfaGraph.add_edge(state+1, state+1, transition=alphabet)
                     self.dfaGraph.add_edge(state, state+2, transition=transition)
