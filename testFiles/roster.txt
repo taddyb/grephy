@@ -1,0 +1,89 @@
+99	Adams, Keion	LB	6-2	245	22	1	Western Michigan
+Adeniyi, Olasunkanmi	LB	6-1	248	20	R	Toledo
+29	Allen, Brian	CB	6-3	215	24	2	Utah
+Allen, Marcus	S	6-2	215	21	R	Penn St.
+94	Alualu, Tyson	DE	6-3	304	30	9	California
+26	Bell, Le'Veon	RB	6-1	225	26	6	Michigan State
+31	Berhe, Nat	S	5-11	195	26	5	San Diego State
+4	Berry, Jordan	P	6-5	195	27	4	Eastern Kentucky
+51	Bostic, Jon	LB	6-1	246	26	6	Florida
+9	Boswell, Chris	K	6-2	185	27	4	Rice
+84	Brown, Antonio	WR	5-10	181	29	9	Central Michigan
+42	Burnett, Morgan	S	6-1	209	29	9	Georgia Tech
+25	Burns, Artie	CB	6-0	197	23	3	Miami (FL)
+57	Canaday, Kameron	LS	6-4	245	25	3	Portland State
+62	Cheek, Joseph	OT	6-7	311	25	1	Texas A&M
+56	Chickillo, Anthony	LB	6-3	255	25	4	Miami (FL)
+60	Collins, Parker	C	6-3	295	23	0	Appalachian State
+30	Conner, James	RB	6-1	233	22	2	Pittsburgh
+Cothren, Parker	DT	6-4	304	24	R	Penn St.
+37	Dangerfield, Jordan	S	5-11	199	27	2	Towson
+21	Davis, Sean	S	6-1	202	24	3	Maryland
+66	DeCastro, David	G	6-5	316	28	7	Stanford
+5	Dobbs, Joshua	QB	6-3	216	23	1	Tennessee
+48	Dupree, Bud	LB	6-4	269	25	4	Kentucky
+Edmunds, Terrell	S	6-1	217	21	R	Virginia Tech
+71	Feiler, Matt	OT	6-6	330	25	2	Bloomsburg (PA)
+67	Finney, B.J.	C/G	6-4	318	26	3	Kansas State
+54	Fort, L.J.	LB	6-0	232	28	4	Northern Iowa
+73	Foster, Ramon	G	6-5	328	32	10	Tennessee
+Franklin, Jarvion	RB	6-0	239	22	R	Western Michigan
+Frazier, Joshua	DT	6-3	321	22	R	Alabama
+40	Galambos, Matt	LB	6-1	239	23	1	Pittsburgh
+77	Gilbert, Marcus	OT	6-6	330	30	8	Florida
+Gilmore, Greg	DE	6-4	308	23	R	LSU
+39	Golden, Malik	S	6-0	205	25	1	Penn State
+61	Graham, Larson	OT	6-5	292	24	0	Duquesne
+15	Griffey, Trey	WR	6-3	192	24	1	Arizona
+85	Grimble, Xavier	TE	6-4	261	25	3	USC
+23	Haden, Joe	CB	5-11	195	29	9	Florida
+79	Hargrave, Javon	NT	6-2	305	25	3	South Carolina State
+65	Hawkins, Jerald	OT	6-6	305	24	3	LSU
+Henderson, Quadree	WR	5-8	192	21	R	Pittsburgh
+88	Heyward-Bey, Darrius	WR	6-2	210	31	10	Maryland
+97	Heyward, Cameron	DT	6-5	295	28	8	Ohio State
+28	Hilton, Mike	CB	5-9	184	24	2	Mississippi
+95	Hooks, Lavon	DE	6-3	312	26	1	Mississippi
+41	Huguenin, Farrington	LB	6-4	268	25	1	Kentucky
+11	Hunter, Justin	WR	6-4	203	26	6	Tennessee
+81	James, Jesse	TE	6-7	261	23	4	Penn State
+Johnson, Trey	CB	5-11	170	23	R	Villanova
+3	Jones, Landry	QB	6-4	225	29	6	Oklahoma
+14	Jones, Tevin	WR	6-2	225	25	1	Memphis
+46	Kelsey, Keith	LB	6-0	233	23	1	Louisville
+49	Leslie, Darnell	DE	6-2	235	23	1	Monmouth (N.J.)
+44	Matakevich, Tyler	LB	6-1	235	25	3	Temple
+93	McCullers, Daniel	DT	6-7	352	25	5	Tennessee
+89	McDonald, Vance	TE	6-4	267	27	6	Rice
+80	McGee, Jake	TE	6-5	250	26	1	Florida
+McKever, Pharoah	TE	6-6	248	24	R	North Carolina St.
+Morris, Patrick	C	6-3	300	23	R	TCU
+45	Nix, Roosevelt	FB	5-11	248	26	4	Kent State
+Nwokeji, Ikenna	OL	6-6	282	23	R	Elon
+Okorafor, Chukwuma	OL	6-6	320	20	R	Western Michigan
+35	Phillips, Dashaun	CB	5-11	186	27	3	Tarleton State
+53	Pouncey, Maurkice	C	6-4	304	28	9	Florida
+22	Ridley, Stevan	RB	5-11	220	29	6	LSU
+7	Roethlisberger, Ben	QB	6-5	240	36	15	Miami (OH)
+Rudolph, Mason	QB	6-5	235	22	R	Oklahoma St.
+Samuels, Jaylen	RB	6-0	225	21	R	N.C. State
+Sayles, Casey	DT	6-3	289	22	0	Ohio U.
+Schleuger, Chris	G	6-4	305	22	R	UAB
+24	Sensabaugh, Coty	CB	5-11	187	29	7	Clemson
+50	Shazier, Ryan	LB	6-1	230	25	5	Ohio State
+19	Smith-Schuster, JuJu	WR	6-1	215	21	2	USC
+Summers, Jamar	CB	6-0	190	22	R	UCONN
+39	Summers, James	RB	6-3	210	23	1	East Carolina
+20	Sutton, Cameron	CB	5-11	188	23	2	Tennessee
+13	Thomas, Justin	WR	5-11	185	24	1	Georgia Tech
+Thomas, Matthew	LB	6-3	232	22	R	Florida St.
+33	Toussaint, Fitzgerald	RB	5-9	204	28	5	Michigan
+16	Tucker, Marcus	WR	5-10	190	25	1	Northern Michigan
+91	Tuitt, Stephon	DE	6-6	303	24	5	Notre Dame
+Vickers, Kendal	DE	6-3	295	22	R	Tennessee
+78	Villanueva, Alejandro	OT	6-9	320	29	4	Army
+96	Walton, L.T.	DE	6-5	305	26	4	Central Michigan
+Washington, James	WR	5-11	213	22	R	Oklahoma St.
+90	Watt, T.J.	LB	6-4	252	23	2	Wisconsin
+6	Wile, Matt	P	6-2	215	25	2	Michigan
+98	Williams, Vince	LB	6-1	233	28	6	Florida State

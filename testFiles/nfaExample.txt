@@ -1,0 +1,3 @@
+(0, 1, {'transition': 'a'})
+(1, 2, {'transition': 'b'})
+(2, 3, {'transition': 'c'})

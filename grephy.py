@@ -12,7 +12,12 @@ import ConfigParser
 import io
 
 #################################################################################
-#NFA Class
+# NFA Class:
+#
+# Generates an NFA while intaking a Regluar Expression (regex).
+#
+# Contains a recognize method which intakes a string and will loop through the nfa
+#   to determine if the string matches the nfa. Returns an array of recognized words.
 #################################################################################
 class NFA(object):
 
@@ -112,7 +117,10 @@ class NFA(object):
         return recog;
 
 ##################################################################################
-# Check function to see if a transition already exists in that direction
+# check():
+#
+# A function to see if a transition already exists between two nodes direction. This
+#   avoids the digraph overwriting an existing transition.
 ##################################################################################
 def check(char, state, graph):
     if(graph.has_edge(state, state)):
@@ -123,7 +131,9 @@ def check(char, state, graph):
         return char
 
 ##################################################################################
-# DFA class
+# DFA class:
+#
+# A Class which takes in an NFA and the regex alphabet in order to generate a DFA
 ##################################################################################
 class DFA(object):
     def __init__(self, nfa, alphabet):
@@ -164,7 +174,10 @@ class DFA(object):
 
 
 ##################################################################################
-# readConfig(): read the ini config FILE
+# readConfig():
+#
+# A function to read the ini config FILE. It returns an object which holds all of the
+#   config values.
 ##################################################################################
 def readConfig(configPath):
     with open(configPath) as f:
@@ -174,7 +187,10 @@ def readConfig(configPath):
     return config;
 
 ##################################################################################
-# parseArguments(): parse the input and create a --help message
+# parseArguments():
+#
+# A function to parse the cmd prompt input as well as and create a --help message.
+#  Returns the arguments passed to the function.
 ##################################################################################
 def parseArguments():
     parser = argparse.ArgumentParser(description='A program which emulates grep')
@@ -188,7 +204,9 @@ def parseArguments():
     return args;
 
 ##################################################################################
-# checkRegex(): checks to make sure the regular expression is valid
+# checkRegex():
+#
+# A function to check to make sure the regular expression is valid. Returns a Boolean.
 ##################################################################################
 def checkRegex(regex):
     try:
@@ -198,7 +216,9 @@ def checkRegex(regex):
         return False;
 
 ##################################################################################
-# learnAlphabet(): learn the alphabet of the input file
+# learnAlphabet():
+#
+# A function to learn the alphabet of the input file and return it.
 ##################################################################################
 def learnAlphabet(inputContents):
     alphabet = set()
@@ -208,7 +228,9 @@ def learnAlphabet(inputContents):
     return alphabet;
 
 ##################################################################################
-# learnRegex(): learn the alphabet of the regex
+# learnRegex():
+#
+# A function to learn the alphabet of the regex and return it.
 ##################################################################################
 def learnRegex(regexp):
     alphabet = set()
@@ -217,7 +239,9 @@ def learnRegex(regexp):
             alphabet.add(character)
     return alphabet;
 ##################################################################################
-# error(): takes in error codes and prints out error messages based on what is inputted
+# error():
+#
+# takes in error codes and prints out error messages based on what is inputted
 ##################################################################################
 def error(code):
     if(code == 100):
@@ -228,7 +252,9 @@ def error(code):
         print("Text contains metacharacters")
 
 ##################################################################################
-# main(): A main function
+# main():
+#
+# The program's main function.
 ##################################################################################
 def main():
     config = readConfig("config/config.ini")
